@@ -1,6 +1,6 @@
 import sympy as sp
 from sympy.physics.mechanics import dynamicsymbols, Point, ReferenceFrame
-
+#barre 2
 #paramètres
 r_21 , r_22, r_3, theta_20, m2, g = sp.symbols('r_21 r__22 r_3 l theta_20 m2 g ', real = True, positive = True, nonzero = True)
 
@@ -76,3 +76,5 @@ Eq_Ry_1 = sp.Eq(R_y, 0)
 Eq_M_O2 = sp.Eq(M_O2, 0)
 
 print(Eq_Rx_1, Eq_Ry_1,Eq_M_O2)
+
+#
