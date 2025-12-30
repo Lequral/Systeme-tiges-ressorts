@@ -5,14 +5,18 @@
 import numpy as np
 from scipy.optimize import fsolve
 
-d=3
+d = 4
+
 
 def f(x):
-    return np.sin(x) - x + 10**(-d)
+    return np.abs(np.sin(x) - x) - 5*10**(-d)
 
-def g(x):
-    return np.cos(x) - x + 10**(-d)
 
-angle_max = min(fsolve(f, .1)[0],fsolve(g, .1)[0])
+# def g(x):
+#     return np.abs(np.cos(x) - (1 - x**2/2)) - 5*10**(-d)
 
-print(f"L'angle maximum pour conserver l'hypothèse des petits angles à une précision près de 10^{-d} est de {angle_max*180/np.pi} °")
+
+angle_max = fsolve(f, .1)[0]*180/np.pi
+
+print(
+    f"L'angle maximum pour conserver l'hypothèse des petits angles à une précision près de 10^{-d} est de {angle_max} °")
