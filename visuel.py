@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import calcul_analytique
 
 # ------------------------
 # Données du modèle
@@ -72,3 +73,24 @@ ax.set_title("Structure 2D – tiges et ressorts (statique)")
 ax.grid(True)
 
 plt.show()
+
+
+# Notre modèle
+
+# Choix poids et biais
+ax_slider_w1 = plt.axes([0.2, 0.1, 0.6, 0.03])
+slider_w1 = Slider(ax_slider_w1, 'w1', -1.0, 1.0, valinit=a0)
+
+def w1(val):
+    
+
+ax_slider_w2 = plt.axes([0.2, 0.2, 0.6, 0.03])
+slider_w2 = Slider(ax_slider_w2, 'w2',-1.0, 1.0, valinit=a0)
+
+ax_slider_b = plt.axes([0.2, 0.3, 0.6, 0.03])
+slider_b = Slider(ax_slider_b, 'biais', -1.0, 1.0, valinit=a0)
+
+#Donnée géométrique
+donnée_géométrie = calcul_analytique.trouver_param_real['param']
+print(donnée_géométrie)
+
