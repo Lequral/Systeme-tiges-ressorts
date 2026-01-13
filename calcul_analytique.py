@@ -208,19 +208,22 @@ def equations(est_simplifie: bool, debug=False) -> tuple:
 
     if not est_simplifie:
         if debug:
-            display(Eq_Rx_1)
-            display(Eq_Ry_1)
-            display(Eq_Mz_O_1)
-            display(Eq_Rx_2)
-            display(Eq_Ry_2)
-            display(Eq_Mz_O_2)
-            display(Eq_bielle_1x)
-            display(Eq_bielle_1y)
-            display(Eq_bielle_2x)
-            display(Eq_bielle_2y)
-            display(Eq_Rx_3)
-            display(Eq_Ry_3)
-            display(Eq_M_O3)
+            try:
+                display(Eq_Rx_1)
+                display(Eq_Ry_1)
+                display(Eq_Mz_O_1)
+                display(Eq_Rx_2)
+                display(Eq_Ry_2)
+                display(Eq_Mz_O_2)
+                display(Eq_bielle_1x)
+                display(Eq_bielle_1y)
+                display(Eq_bielle_2x)
+                display(Eq_bielle_2y)
+                display(Eq_Rx_3)
+                display(Eq_Ry_3)
+                display(Eq_M_O3)
+            except:
+                pass
         equations.append(Eq_Rx_1)
         equations.append(Eq_Ry_1)
         equations.append(Eq_Mz_O_1)
