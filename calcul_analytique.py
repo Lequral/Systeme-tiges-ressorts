@@ -231,32 +231,25 @@ def equations(est_simplifie: bool, debug=False) -> tuple:
                 display(Eq_M_O3)
             except:
                 pass
-        equations.append(Eq_Rx_1)
-        equations.append(Eq_Ry_1)
-        equations.append(Eq_Mz_O_1)
-        equations.append(Eq_Rx_2)
-        equations.append(Eq_Ry_2)
-        equations.append(Eq_Mz_O_2)
-        equations.append(Eq_bielle_1x)
-        equations.append(Eq_bielle_1y)
-        equations.append(Eq_bielle_2x)
-        equations.append(Eq_bielle_2y)
-        equations.append(Eq_Rx_3)
-        equations.append(Eq_Ry_3)
-        equations.append(Eq_M_O3)
+        equations.append(R_x)
+        equations.append(R_y)
+        equations.append(M_O_1_z)
+        equations.append(R_xp)
+        equations.append(R_yp)
+        equations.append(M_O_2_z)
+        equations.append(terme_gauche_bielle_1x-L)
+        equations.append(terme_gauche_bielle_1y)
+        equations.append(terme_gauche_bielle_2x-L)
+        equations.append(terme_gauche_bielle_2y)
+        equations.append(R_x_3)
+        equations.append(R_y_3)
+        equations.append(M3)
 
         param = (r_11, r_12, r_21, r_22, m_1, m_2, m_3, g, a, b, r_3, L, theta10, theta20, gamma10,
                  theta1, theta2, gamma1, X01, Y01, F_1, T_1, X02, Y02, F_2, T_2, X03, Y03, k_1, k_2, k_3)
-        func = sp.lambdify((
-            param
-        ), equations, 'numpy')
-
-        def numpy_equations(vars):
-            r_11, r_12, r_21, r_22, m_1, m_2, m_3, g, a, b, r_3, L, theta10, theta20, gamma10, theta1, theta2, gamma1, X01, Y01, F_1, T_1, X02, Y02, F_2, T_2, X03, Y03, k_1, k_2, k_3 = vars
-            return func(r_11, r_12, r_21, r_22, m_1, m_2, m_3, g, a, b, r_3, L, theta10, theta20, gamma10, theta1, theta2, gamma1, X01, Y01, F_1, T_1, X02, Y02, F_2, T_2, X03, Y03, k_1, k_2, k_3)
-
+        
         return {
-            "numpy_equation": numpy_equations, "param": param, "equation": equations
+            "param": param, "equation": equations
         }
     else:
         # Variable à réutiliser
@@ -378,5 +371,6 @@ def trouver_param_real(poids_reseaux: list, debug=False) -> list:
 
     solu = least_squares(eq, guess, bounds=(
         min_var, max_var), max_nfev=10000)
+    
 
     return solu
