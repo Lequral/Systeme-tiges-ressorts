@@ -183,10 +183,10 @@ def equations(est_simplifie: bool, debug=False) -> tuple:
     Eq_bielle_2x = sp.Eq(terme_gauche_bielle_2x, L)
     Eq_bielle_2y = sp.Eq(terme_gauche_bielle_2y, 0)
 
-    expression_theta1 = sp.solve(Eq_bielle_1y, theta1)[0] 
-    expression_theta2 = sp.solve(Eq_bielle_2y, theta2)[0]
-    expression_gamma1 = sp.solve(Eq_M_O3, gamma1)[0]
-
+    if est_simplifie:
+        expression_theta1 = sp.solve(Eq_bielle_1y, theta1)[0] 
+        expression_theta2 = sp.solve(Eq_bielle_2y, theta2)[0]
+        
     # PFS ∑=barre3
     # Liaison 0/3
     R_03 = X03 * R0.x + Y03 * R0.y  # Pivot et analyse plane
@@ -210,6 +210,9 @@ def equations(est_simplifie: bool, debug=False) -> tuple:
     M3 = MO3.dot(R0.z) + M_T_3.dot(R0.z) + M_Tp_3.dot(R0.z)
 
     Eq_M_O3 = sp.Eq(M3, 0)
+
+    if est_simplifie:
+        expression_gamma1 = sp.solve(Eq_M_O3, gamma1)[0]
 
     if not est_simplifie:
         if debug:
@@ -327,10 +330,6 @@ def equations(est_simplifie: bool, debug=False) -> tuple:
         return {
             "weight_expression": [W01_value, W02_value, B1_value],
             "param": (r_11, r_12, r_21, r_22, r_3, k_1, k_2, k_3, b),
-            "theta1_expr": expression_theta1, 
-            "theta2_expr": expression_theta2, 
-            "gamma1_expr": expression_gamma1,
-            "O1O2_expr": sp.simplify(O_2.pos_from(O_1))
         }
 
 

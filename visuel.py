@@ -125,7 +125,7 @@ k_2 = donnée_géométrie[6]
 k_3 = donnée_géométrie[7]
 b = donnée_géométrie[8]
 
-dico = calcul_analytique.equations(True)
+dico = calcul_analytique.equations(False)
 theta1 = dico["theta1_expr"] 
 theta2 = dico["theta2_expr"] 
 gamma1 = dico["gamma1_expr"]
