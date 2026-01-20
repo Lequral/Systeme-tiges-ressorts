@@ -351,12 +351,8 @@ def trouver_param_real(poids_reseaux: list, debug=False) -> list:
     eq = [weight_expr[i] - poids_reseaux[i] for i in range(3)]
 
     for i in range(len(eq)):
-        equation = eq[i]
-        display(equation)
-        eq[i] = equation.subs({r_22: r_12})
-        equation = eq[i]
-        display(equation)
-
+        eq[i] = eq[i].subs({r_22: r_12})
+        
     func = sp.lambdify((r_11, r_12, r_21, r_3, k_1, k_2,
                        k_3, b), eq, 'numpy')  # on enlève r_22
 
