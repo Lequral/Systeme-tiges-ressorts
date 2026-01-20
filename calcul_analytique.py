@@ -95,7 +95,6 @@ def equations(est_simplifie: bool, debug=False) -> tuple:
     O_1B_1 = B_1.pos_from(O_1)
     O_2B_2 = B_2.pos_from(O_2)
 
-
     # PFS ∑ = Barre1
     # Torseurs
     R_01 = X01 * R0.x + Y01 * R0.y
@@ -184,9 +183,9 @@ def equations(est_simplifie: bool, debug=False) -> tuple:
     Eq_bielle_2y = sp.Eq(terme_gauche_bielle_2y, 0)
 
     if est_simplifie:
-        expression_theta1 = sp.solve(Eq_bielle_1y, theta1)[0] 
+        expression_theta1 = sp.solve(Eq_bielle_1y, theta1)[0]
         expression_theta2 = sp.solve(Eq_bielle_2y, theta2)[0]
-        
+
     # PFS ∑=barre3
     # Liaison 0/3
     R_03 = X03 * R0.x + Y03 * R0.y  # Pivot et analyse plane
@@ -284,6 +283,20 @@ def equations(est_simplifie: bool, debug=False) -> tuple:
         B1_value = (- b*k_1*r_22**2*r_3 + b*k_2*r_12**2*r_3 - gamma10*k_3*r_12**2*r_22**2 - k_1*r_12*r_22**2*r_3 *
                     theta10 - k_2*r_12**2*r_22*r_3*theta20)/(k_1*r_22**2*r_3**2 + k_2*r_12**2*r_3**2 - k_3*r_12**2*r_22**2)
         
+        W01_value = sp.simplify(W01_value)
+        W02_value = sp.simplify(W02_value)
+        B1_value = sp.simplify(B1_value)
+
+        # print("w01")
+        # print(str(W01_value.subs({gamma10: 0, theta10:0, theta20:0})).replace(
+        #     "**", "^").replace("*", " "))
+        # print("w02")
+        # print(str(W02_value.subs({gamma10: 0, theta10:0, theta20:0})).replace(
+        #     "**", "^").replace("*", " "))
+        # print("b1")
+        # print(str(B1_value.subs({gamma10: 0, theta10:0, theta20:0})).replace(
+        #     "**", "^").replace("*", " "))
+
         assert sp.simplify(expression_gamma1-expr_gamma1_simple.subs({
             W01: W01_value,
             W02: W02_value,
@@ -333,26 +346,35 @@ def equations(est_simplifie: bool, debug=False) -> tuple:
         }
 
 
-def trouver_param_real(poids_reseaux: list, debug = False) -> list:
+
+def trouver_param_real(poids_reseaux: list, debug=False) -> list:
     """
     Trouve les valeurs du problèmes réels pour correspondre aux biais donné (poids_reseaux) en respectant les équations donnés (equationSimple)
     """
     dico = equations(True, debug)
     weight_expr, param = dico["weight_expression"], dico["param"]
-    r_11, r_12, r_21, r_22, r_3, k_1, k_2, k_3, b =  param
+    r_11, r_12, r_21, r_22, r_3, k_1, k_2, k_3, b = param  # r_22,
 
     eq = [weight_expr[i] - poids_reseaux[i] for i in range(3)]
 
-    func = sp.lambdify(param, eq, 'numpy')
+    for i in range(len(eq)):
+        equation = eq[i]
+        display(equation)
+        eq[i] = equation.subs({r_22: r_12})
+        equation = eq[i]
+        display(equation)
+
+    func = sp.lambdify((r_11, r_12, r_21, r_3, k_1, k_2,
+                       k_3, b), eq, 'numpy')  # on enlève r_22
 
     def eq(vars):
-        r_11, r_12, r_21, r_22, r_3, k_1, k_2, k_3, b = vars
-        return func(r_11, r_12, r_21, r_22, r_3, k_1, k_2, k_3, b)
+        r_11, r_12, r_21, r_3, k_1, k_2, k_3, b = vars
+        return func(r_11, r_12, r_21, r_3, k_1, k_2, k_3, b)
 
-    guess = [1 for i in range(9)]
+    guess = [1 for i in range(8)]
 
-    min_var = [-100, -100, -100, -100, -100, 1, 1, 1, -100]
-    max_var = [100, 100, 100, 100, 100, 100, 100, 100, 100]
+    min_var = [-100, -100, -100, -100, 1, 1, 1, -100]
+    max_var = [100, 100, 100, 100, 100, 100, 100, 100]
 
     solu = least_squares(eq, guess, bounds=(
         min_var, max_var), max_nfev=10000)
