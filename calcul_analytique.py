@@ -275,7 +275,7 @@ def equations(est_simplifie: bool, debug=False) -> tuple:
                                               2 + k_2*r_12**2*r_3**2 - k_3*r_12**2*r_22**2)
         B1_value = (- b*k_1*r_22**2*r_3 + b*k_2*r_12**2*r_3 - gamma10*k_3*r_12**2*r_22**2 - k_1*r_12*r_22**2*r_3 *
                     theta10 - k_2*r_12**2*r_22*r_3*theta20)/(k_1*r_22**2*r_3**2 + k_2*r_12**2*r_3**2 - k_3*r_12**2*r_22**2)
-
+        
         assert sp.simplify(expression_gamma1-expr_gamma1_simple.subs({
             W01: W01_value,
             W02: W02_value,
@@ -349,4 +349,4 @@ def trouver_param_real(poids_reseaux: list, debug = False) -> list:
     solu = least_squares(eq, guess, bounds=(
         min_var, max_var), max_nfev=10000)
 
-    return solu # A tester
+    return solu

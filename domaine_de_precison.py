@@ -12,8 +12,8 @@ def f(x):
     return np.abs(np.sin(x) - x) - 5*10**(-d)
 
 
-# def g(x):
-#     return np.abs(np.cos(x) - (1 - x**2/2)) - 5*10**(-d)
+def g(x):
+    return np.abs(np.cos(x) - (1 - x**2/2)) - 5*10**(-d)
 
 
 angle_max = fsolve(f, .1)[0]*180/np.pi
