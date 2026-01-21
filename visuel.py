@@ -53,8 +53,6 @@ def calcul(val=None):
         m_3_ex: 1
     }) for e in equation]
 
-    for e in equation:
-        print(e)
 
     param = (theta1_ex, theta2_ex, gamma1_ex, X01_ex, Y01_ex,
              T1_ex, X02_ex, Y02_ex, T2_ex, X03_ex, Y03_ex)
@@ -150,7 +148,7 @@ def calcul(val=None):
 
     fig1.canvas.draw_idle()
     print(
-        f"theta 1 vaut {theta1}rad, theta 2 vaut {theta2}rad et l'output gamma 1 vaut {gamma1}")
+        f"theta 1 = {theta1}rad, theta 2 = {theta2}rad et gamma 1 = {gamma1}")
 
 
 # Choix poids et biais
