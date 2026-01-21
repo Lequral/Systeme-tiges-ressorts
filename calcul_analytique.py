@@ -247,7 +247,7 @@ def equations(est_simplifie: bool, debug=False) -> tuple:
 
         param = (r_11, r_12, r_21, r_22, m_1, m_2, m_3, g, a, b, r_3, L, theta10, theta20, gamma10,
                  theta1, theta2, gamma1, X01, Y01, F_1, T_1, X02, Y02, F_2, T_2, X03, Y03, k_1, k_2, k_3)
-        
+
         return {
             "param": param, "equation": equations
         }
@@ -275,7 +275,7 @@ def equations(est_simplifie: bool, debug=False) -> tuple:
                                               2 + k_2*r_12**2*r_3**2 - k_3*r_12**2*r_22**2)
         B1_value = (- b*k_1*r_22**2*r_3 + b*k_2*r_12**2*r_3 - gamma10*k_3*r_12**2*r_22**2 - k_1*r_12*r_22**2*r_3 *
                     theta10 - k_2*r_12**2*r_22*r_3*theta20)/(k_1*r_22**2*r_3**2 + k_2*r_12**2*r_3**2 - k_3*r_12**2*r_22**2)
-        
+
         W01_value = sp.simplify(W01_value)
         W02_value = sp.simplify(W02_value)
         B1_value = sp.simplify(B1_value)
@@ -304,7 +304,6 @@ def equations(est_simplifie: bool, debug=False) -> tuple:
         if debug:
             try:
                 # Si le fichier est executé dans un Jupyter Notebook
-                display("Equations :")
                 print('Théorème de la résultante ∑ = Barre1')
                 display(Eq_Rx_1, Eq_Ry_1, Eq_Mz_O_1)
                 print('Théorème de la résultante ∑ = Barre2')
@@ -339,7 +338,6 @@ def equations(est_simplifie: bool, debug=False) -> tuple:
         }
 
 
-
 def trouver_param_real(poids_reseaux: list, debug=False) -> list:
     """
     Trouve les valeurs du problèmes réels pour correspondre aux biais donné (poids_reseaux) en respectant les équations donnés (equationSimple)
@@ -352,7 +350,7 @@ def trouver_param_real(poids_reseaux: list, debug=False) -> list:
 
     for i in range(len(eq)):
         eq[i] = eq[i].subs({r_22: r_12})
-        
+
     func = sp.lambdify((r_11, r_12, r_21, r_3, k_1, k_2,
                        k_3, b), eq, 'numpy')  # on enlève r_22
 
@@ -367,6 +365,5 @@ def trouver_param_real(poids_reseaux: list, debug=False) -> list:
 
     solu = least_squares(eq, guess, bounds=(
         min_var, max_var), max_nfev=10000)
-    
 
     return solu

@@ -53,7 +53,7 @@ def calcul(val=None):
 
     r_11, r_12, r_21, r_3, k_1, k_2, k_3, b = donnée_géométrie
     r_22 = r_12
-    
+
     dico = calcul_analytique.equations(False)
     equation = dico["equation"]
 
